@@ -5,7 +5,7 @@ const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
 @onready var anim = $AnimatedSprite2D
-
+var health = 100
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -37,5 +37,9 @@ func _physics_process(delta: float) -> void:
 		
 	if velocity.y > 0:
 		anim.play('Fall')
+		
+	if health <= 0:
+		queue_free();
+		get_tree().change_scene_to_file("res://Scenes/Menu/menu.tscn")
 
 	move_and_slide()
