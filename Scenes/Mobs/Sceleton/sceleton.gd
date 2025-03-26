@@ -4,8 +4,8 @@ extends CharacterBody2D
 const SPEED = 100.0
 const JUMP_VELOCITY = -400.0
 
-var chase: bool = false
 @onready var anim = $AnimatedSprite2D
+var chase: bool = false
 var alive: bool = true
 
 func _physics_process(delta: float) -> void:
@@ -44,8 +44,9 @@ func _on_detector_body_exited(body: Node2D) -> void:
 
 func _on_death_body_entered(body: Node2D) -> void:
 	if body.name == 'Player':
-		body.velocity.y -= 200
-		death()
+		if alive == true:
+			body.velocity.y -= 200
+			death()
 
 
 func _on_damage_body_entered(body: Node2D) -> void:

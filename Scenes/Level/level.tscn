@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://du4obxgehfgp2"]
+[gd_scene load_steps=12 format=3 uid="uid://du4obxgehfgp2"]
 
 [ext_resource type="PackedScene" uid="uid://qfiin2qv7df6" path="res://Scenes/Player/Player.tscn" id="1_iheil"]
 [ext_resource type="Texture2D" uid="uid://bckc8vgjm72se" path="res://Assets/oak_woods_v1.0/background/background_layer_1.png" id="2_x701m"]
@@ -6,7 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://c7wmp1msylp7j" path="res://Assets/oak_woods_v1.0/background/background_layer_3.png" id="4_q8n36"]
 [ext_resource type="Texture2D" uid="uid://df0nj6h0sj5xa" path="res://Assets/oak_woods_v1.0/oak_woods_tileset.png" id="5_362x8"]
 [ext_resource type="PackedScene" uid="uid://bfsiydlhdp4be" path="res://Scenes/Mobs/Sceleton/sceleton.tscn" id="6_7i4w6"]
-[ext_resource type="Script" uid="uid://bnn8mm6s7fk4" path="res://Scenes/Level/label.gd" id="7_q8n36"]
+[ext_resource type="Script" uid="uid://bnn8mm6s7fk4" path="res://Scenes/Level/hpLabel.gd" id="7_q8n36"]
+[ext_resource type="Script" uid="uid://bjpxou21wpmgh" path="res://Scenes/Level/goldLabel.gd" id="8_43gce"]
+[ext_resource type="Script" uid="uid://cr7040g6dfrvw" path="res://Scenes/Level/timer.gd" id="9_43gce"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_43gce"]
 texture = ExtResource("5_362x8")
@@ -577,13 +579,31 @@ position = Vector2(867, 547)
 [node name="Sceleton5" parent="Mobs" instance=ExtResource("6_7i4w6")]
 position = Vector2(985, 534)
 
-[node name="Player HP" type="CanvasLayer" parent="."]
+[node name="Labels" type="CanvasLayer" parent="."]
 
-[node name="Label" type="Label" parent="Player HP"]
+[node name="HP" type="Label" parent="Labels"]
 offset_left = 22.0
 offset_top = 22.0
 offset_right = 279.0
-offset_bottom = 129.0
-theme_override_font_sizes/font_size = 31
+offset_bottom = 66.0
+theme_override_font_sizes/font_size = 30
 text = "HP"
 script = ExtResource("7_q8n36")
+
+[node name="Coins" type="Label" parent="Labels"]
+offset_left = 22.0
+offset_top = 73.0
+offset_right = 196.0
+offset_bottom = 156.0
+theme_override_font_sizes/font_size = 30
+text = "GOLD"
+script = ExtResource("8_43gce")
+
+[node name="Collectables" type="Node2D" parent="."]
+
+[node name="Timer" type="Timer" parent="Collectables"]
+wait_time = 3.0
+autostart = true
+script = ExtResource("9_43gce")
+
+[connection signal="timeout" from="Collectables/Timer" to="Collectables/Timer" method="_on_timeout"]
