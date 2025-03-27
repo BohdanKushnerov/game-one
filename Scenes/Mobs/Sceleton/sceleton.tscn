@@ -146,6 +146,7 @@ shape = SubResource("CapsuleShape2D_eeudv")
 visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
+visible = false
 shape = SubResource("CircleShape2D_gywmy")
 
 [node name="Death" type="Area2D" parent="."]

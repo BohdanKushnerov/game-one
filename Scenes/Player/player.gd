@@ -4,9 +4,10 @@ extends CharacterBody2D
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
-@onready var anim = $AnimatedSprite2D
+@onready var playerAnim = $AnimatedSprite2D
 var health = 100
 var gold = 0
+
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -16,7 +17,7 @@ func _physics_process(delta: float) -> void:
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
-		anim.play('Jump')
+		playerAnim.play('Jump')
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -24,23 +25,30 @@ func _physics_process(delta: float) -> void:
 	if direction:
 		velocity.x = direction * SPEED
 		if velocity.y == 0:
-			anim.play("Run")
+			playerAnim.play("Run")
 
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		if velocity.y == 0:
-			anim.play("Idle")
+			playerAnim.play("Idle")
 		
 	if direction == -1:
-		anim.flip_h = true
+		playerAnim.flip_h = true
 	elif direction == 1:
-		anim.flip_h = false
+		playerAnim.flip_h = false
 		
 	if velocity.y > 0:
-		anim.play('Fall')
+		playerAnim.play('Fall')
 		
 	if health <= 0:
-		queue_free();
-		get_tree().change_scene_to_file("res://Scenes/Menu/menu.tscn")
-
+		deathPlayer()
+	
+	
 	move_and_slide()
+
+
+func deathPlayer():
+	#playerAnim.play("Death")
+	#await playerAnim.animation_finished  # Ждём окончания анимации
+	get_tree().change_scene_to_file("res://Scenes/Menu/menu.tscn")
+	queue_free()  # Удаляем персонажа после завершения анимации
