@@ -604,6 +604,13 @@ theme_override_font_sizes/font_size = 30
 text = "GOLD"
 script = ExtResource("8_43gce")
 
+[node name="Attack" type="Label" parent="Labels"]
+offset_left = 322.0
+offset_top = 23.0
+offset_right = 592.0
+offset_bottom = 103.0
+text = "Ready to attack"
+
 [node name="Collectables" type="Node2D" parent="."]
 
 [node name="goldCoinTimerCreating" type="Timer" parent="Collectables"]
