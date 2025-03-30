@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://du4obxgehfgp2"]
+[gd_scene load_steps=24 format=4 uid="uid://du4obxgehfgp2"]
 
 [ext_resource type="PackedScene" uid="uid://qfiin2qv7df6" path="res://Scenes/Player/Player.tscn" id="1_iheil"]
 [ext_resource type="Script" uid="uid://bpn4a7x6o6p6w" path="res://Scenes/Level/level.gd" id="1_wvups"]
@@ -528,8 +528,135 @@ texture = ExtResource("5_362x8")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_43gce")
 
+[sub_resource type="Animation" id="Animation_k2muv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DayText:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_t7iwn"]
+resource_name = "dayTextVisibility"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DayText:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dhxf7"]
+_data = {
+&"RESET": SubResource("Animation_k2muv"),
+&"dayTextVisibility": SubResource("Animation_t7iwn")
+}
+
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_t7iwn"]
 polygon = PackedVector2Array(-1024, 614, -1024, 672, 3344, 672, 3344, 613)
+
+[sub_resource type="Animation" id="Animation_dhxf7"]
+resource_name = "morning"
+length = 20.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.95, 0.2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PointLight2D:energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.5, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_mkqdc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.95]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PointLight2D:energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.5]
+}
+
+[sub_resource type="Animation" id="Animation_n0xg1"]
+resource_name = "evening"
+length = 20.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.2, 0.95]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PointLight2D:energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n0xg1"]
+_data = {
+&"RESET": SubResource("Animation_mkqdc"),
+&"evening": SubResource("Animation_n0xg1"),
+&"morning": SubResource("Animation_dhxf7")
+}
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_wvups")
@@ -600,7 +727,7 @@ position = Vector2(985, 534)
 [node name="HP" type="Label" parent="Labels"]
 offset_left = 22.0
 offset_top = 22.0
-offset_right = 279.0
+offset_right = 198.0
 offset_bottom = 66.0
 theme_override_font_sizes/font_size = 30
 text = "HP"
@@ -610,17 +737,38 @@ script = ExtResource("7_q8n36")
 offset_left = 22.0
 offset_top = 73.0
 offset_right = 196.0
-offset_bottom = 156.0
+offset_bottom = 115.0
 theme_override_font_sizes/font_size = 30
 text = "GOLD"
 script = ExtResource("8_43gce")
 
 [node name="Attack" type="Label" parent="Labels"]
-offset_left = 322.0
-offset_top = 23.0
-offset_right = 592.0
-offset_bottom = 103.0
+offset_left = 422.0
+offset_top = 155.0
+offset_right = 692.0
+offset_bottom = 235.0
 text = "Ready to attack"
+
+[node name="DayText" type="Label" parent="Labels"]
+modulate = Color(1, 1, 1, 0)
+offset_left = 417.0
+offset_top = 15.0
+offset_right = 763.0
+offset_bottom = 126.0
+theme_override_font_sizes/font_size = 80
+text = "Day"
+
+[node name="TimeOfTheDay" type="Label" parent="Labels"]
+offset_left = 22.0
+offset_top = 123.0
+offset_right = 132.0
+offset_bottom = 157.0
+text = "TimeOfTheDay"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Labels"]
+libraries = {
+&"": SubResource("AnimationLibrary_dhxf7")
+}
 
 [node name="Collectables" type="Node2D" parent="."]
 
@@ -629,16 +777,18 @@ wait_time = 3.0
 autostart = true
 script = ExtResource("9_43gce")
 
-[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+[node name="Light" type="Node" parent="."]
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="Light"]
 energy = 0.95
 blend_mode = 1
 range_layer_min = -1
 
-[node name="DayNight" type="Timer" parent="."]
+[node name="DayNight" type="Timer" parent="Light"]
 wait_time = 20.0
 autostart = true
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="Light"]
 position = Vector2(306, 565)
 scale = Vector2(0.459687, 0.46375)
 color = Color(0.980392, 0.784314, 0.666667, 1)
@@ -646,8 +796,13 @@ energy = 1.5
 shadow_enabled = true
 texture = ExtResource("13_t7iwn")
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Light"]
 occluder = SubResource("OccluderPolygon2D_t7iwn")
 
+[node name="DayNightAnim" type="AnimationPlayer" parent="Light"]
+libraries = {
+&"": SubResource("AnimationLibrary_n0xg1")
+}
+
 [connection signal="timeout" from="Collectables/goldCoinTimerCreating" to="Collectables/goldCoinTimerCreating" method="_on_timeout"]
-[connection signal="timeout" from="DayNight" to="." method="_on_day_night_timeout"]
+[connection signal="timeout" from="Light/DayNight" to="." method="_on_day_night_timeout"]

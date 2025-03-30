@@ -8,34 +8,55 @@ enum TimeOfDay {
 	NIGHT
 }
 
-@onready var light = $DirectionalLight2D
-@onready var pointLight = $PointLight2D
-var state = TimeOfDay.MORNING
+#@onready var light = $DirectionalLight2D
+#@onready var pointLight = $PointLight2D
+@onready var dayTimeText = $Labels/TimeOfTheDay
+@onready var dayText = $Labels/DayText
+@onready var labelsAnimPlayer = $Labels/AnimationPlayer
+@onready var dayNightAnimPlayer = $Light/DayNightAnim
 
+var state = TimeOfDay.MORNING
+var dayCount: int = 0
 
 func _ready() -> void:
-	light.enabled = true
+	dayTimeText.text = "MORNING"
+	set_day_text()
+	morning_state()
 
 
-func _process(delta: float) -> void:
-	match state:
-		TimeOfDay.MORNING:
-			morningState()
-		TimeOfDay.EVENING:
-			eveningState()
+func morning_state():
+	dayNightAnimPlayer.play("morning")
 
 
-func morningState():
-	var tween = get_tree().create_tween()
-	tween.tween_property(light, 'energy', 0.2, 20)
-	tween.tween_property(pointLight, 'energy', 0, 20)
-
-
-func eveningState():
-	var tween = get_tree().create_tween()
-	tween.tween_property(light, 'energy', 0.95, 20)
-	tween.tween_property(pointLight, 'energy', 1.5, 20)
+func evening_state():
+	dayNightAnimPlayer.play("evening")
 
 
 func _on_day_night_timeout() -> void:
-	state = TimeOfDay.values()[(state + 1) % TimeOfDay.size()]
+	if state < 3:
+		state += 1
+	else:
+		state = TimeOfDay.MORNING
+
+	match state:
+		TimeOfDay.MORNING:
+			dayTimeText.text = "MORNING"
+			set_day_text()
+			morning_state()
+		TimeOfDay.DAY:
+			dayTimeText.text = "DAY"
+		TimeOfDay.EVENING:
+			dayTimeText.text = "EVENING"
+			evening_state()
+		TimeOfDay.NIGHT:
+			dayTimeText.text = "NIGHT"
+			
+
+
+	#state = TimeOfDay.values()[(state + 1) % TimeOfDay.size()]
+
+
+func set_day_text():
+	dayCount += 1
+	dayText.text = 'Day: ' + str(dayCount)
+	labelsAnimPlayer.play('dayTextVisibility')
