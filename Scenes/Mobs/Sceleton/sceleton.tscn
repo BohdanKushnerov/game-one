@@ -129,6 +129,7 @@ size = Vector2(5.89063, 1.5)
 size = Vector2(16, 4)
 
 [node name="Sceleton" type="CharacterBody2D"]
+collision_layer = 4
 script = ExtResource("1_k0hoh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

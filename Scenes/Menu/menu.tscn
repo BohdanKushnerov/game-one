@@ -7,22 +7,24 @@
 script = ExtResource("1_cqskg")
 
 [node name="PlayButton" type="Button" parent="."]
-offset_left = 359.0
-offset_top = 127.0
-offset_right = 759.0
-offset_bottom = 227.0
+offset_left = 239.0
+offset_top = 24.0
+offset_right = 639.0
+offset_bottom = 124.0
 theme_override_font_sizes/font_size = 35
 text = "Play game"
 
 [node name="QuitButton" type="Button" parent="."]
-offset_left = 355.0
-offset_top = 427.0
-offset_right = 755.0
-offset_bottom = 527.0
+offset_left = 234.0
+offset_top = 355.0
+offset_right = 634.0
+offset_bottom = 455.0
 theme_override_font_sizes/font_size = 35
 text = "Quit"
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("2_3ymnh")]
+scale = Vector2(0.8, 0.8)
+transform = Transform2D(0.8, 0, 0, 0.8, 0, 0)
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]
