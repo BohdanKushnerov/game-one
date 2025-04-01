@@ -27,23 +27,24 @@ var state = MOVE
 var run_speed = 1
 var combo = false
 var attack_cooldown = false
+var player_position: Vector2
 
 func _physics_process(delta: float) -> void:
 	match state:
 		IDLE:
 			pass
 		ATTACK:
-			attackState()
+			attack_state()
 		ATTACK2:
-			attack2State()
+			attack2_state()
 		ATTACK3:
-			attack3State()
+			attack3_state()
 		SLIDE:
-			slideState()
+			slide_state()
 		MOVE:
-			moveState()
+			move_state()
 		BLOCK:
-			blockState()
+			block_state()
 		JUMP:
 			pass
 		HURT:
@@ -71,9 +72,12 @@ func _physics_process(delta: float) -> void:
 		get_tree().change_scene_to_file("res://Scenes/Menu/menu.tscn")
 
 	move_and_slide()
+	
+	player_position = self.position
+	Signals.emit_signal('player_position_update', player_position)
 
 
-func moveState():
+func move_state():
 	var direction = Input.get_axis("left", "right")
 	if direction:
 		velocity.x = direction * SPEED * run_speed
@@ -108,31 +112,31 @@ func moveState():
 		state = ATTACK
 
 
-func blockState():
+func block_state():
 	velocity.x = 0
 	animPlayer.play("Block")
 	if Input.is_action_just_released("block"):
 		state = MOVE
 
 
-func slideState():
+func slide_state():
 	animPlayer.play("Slide")
 	await animPlayer.animation_finished 
 	state = MOVE
 
 
-func attackState():
+func attack_state():
 	if Input.is_action_just_pressed("attack") and combo == true:
 		state = ATTACK2
 
 	velocity.x = 0
 	animPlayer.play("Attack")
 	await animPlayer.animation_finished 
-	makeAttackCooldown()
+	make_attack_cooldown()
 	state = MOVE
 
 
-func attack2State():
+func attack2_state():
 	if Input.is_action_just_pressed("attack") and combo == true:
 		state = ATTACK3
 
@@ -141,19 +145,19 @@ func attack2State():
 	state = MOVE
 
 
-func attack3State():
+func attack3_state():
 	animPlayer.play("Attack3")
 	await animPlayer.animation_finished 
 	state = MOVE
 
 
-func makeCombo():
+func make_combo():
 	combo = true;
 	await animPlayer.animation_finished 
 	combo = false;
 
 
-func makeAttackCooldown():
+func make_attack_cooldown():
 	attack_cooldown = true
 	var cooldown_time = 5.0
 
@@ -165,7 +169,7 @@ func makeAttackCooldown():
 	attack_cooldown = false
 	attackLabel.text = "Ready to attack"
 
-func deathState():
+func death_state():
 	animPlayer.play("Death")
 	await animPlayer.animation_finished 
 	queue_free()

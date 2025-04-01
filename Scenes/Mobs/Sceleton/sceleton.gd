@@ -33,6 +33,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_detector_body_entered(body: Node2D) -> void:
+	print(body.name)
 	if body.name == 'Player':
 		chase = true
 

@@ -15,10 +15,21 @@ run/main_scene="uid://c1y6328r65ae8"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Signals="*res://Scenes/signals.gd"
+
 [display]
 
 window/size/viewport_width=900
 window/size/viewport_height=500
+window/energy_saving/keep_screen_on=false
+window/vsync/vsync_mode=0
+
+[editor]
+
+movie_writer/disable_vsync=true
+movie_writer/fps=200
 
 [editor_plugins]
 
@@ -27,6 +38,7 @@ enabled=PackedStringArray("res://addons/AS2P/plugin.cfg")
 [gui]
 
 theme/default_theme_scale=1.5
+theme/default_font_hinting=2
 
 [input]
 

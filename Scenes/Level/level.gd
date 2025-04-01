@@ -8,8 +8,6 @@ enum TimeOfDay {
 	NIGHT
 }
 
-#@onready var light = $DirectionalLight2D
-#@onready var pointLight = $PointLight2D
 @onready var dayTimeText = $Labels/TimeOfTheDay
 @onready var dayText = $Labels/DayText
 @onready var labelsAnimPlayer = $Labels/AnimationPlayer
@@ -50,10 +48,6 @@ func _on_day_night_timeout() -> void:
 			evening_state()
 		TimeOfDay.NIGHT:
 			dayTimeText.text = "NIGHT"
-			
-
-
-	#state = TimeOfDay.values()[(state + 1) % TimeOfDay.size()]
 
 
 func set_day_text():

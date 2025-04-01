@@ -130,6 +130,7 @@ size = Vector2(16, 4)
 
 [node name="Sceleton" type="CharacterBody2D"]
 collision_layer = 4
+collision_mask = 3
 script = ExtResource("1_k0hoh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -144,19 +145,23 @@ position = Vector2(1, 2)
 shape = SubResource("CapsuleShape2D_eeudv")
 
 [node name="Detector" type="Area2D" parent="."]
-visible = false
+collision_layer = 4
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
-visible = false
 shape = SubResource("CircleShape2D_gywmy")
 
 [node name="Death" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Death"]
 position = Vector2(-2.94531, -14.25)
 shape = SubResource("RectangleShape2D_k0hoh")
 
 [node name="Damage" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Damage"]
 position = Vector2(1, -1)
